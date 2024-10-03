@@ -5,15 +5,30 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-image: url(./linedphoto-cGcHSGzSDoM-unsplash.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --orange-web: hsla(36, 100%, 62%, 1);
+  --davys-gray: hsla(240, 3%, 30%, 1);
+  --ecru: hsla(41, 48%, 61%, 1);
+  --davys-gray-2: hsla(252, 3%, 35%, 1);
+  --coral: hsla(13, 96%, 67%, 1);
+  --cadet-gray: hsla(185, 6%, 65%, 1);
+  --cinereous: hsla(13, 18%, 55%, 1);
+  --bittersweet: hsla(9, 71%, 64%, 1);
+  --red: rgb(216, 41, 10);
+  --paynes-gray: hsla(196, 15%, 36%, 1);
+  --smoky-black: hsla(35, 32%, 7%, 1);
+  overflow-x: hidden;
 }
 
-a {
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -65,4 +80,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
