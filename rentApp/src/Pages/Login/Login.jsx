@@ -1,152 +1,154 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../src/Login/Login.css';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../src/firebase";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  let [errorsPlaceholder, setErrorsPlaceholder] = useState({});
-  const [errorsLine, setErrorsLine] = useState({});
-  let [errors, setErrors] = useState({});
+import InputsValidations from "../../Utils/InputsValidations";
+
+import styles from "./Login.module.css";
+
+import { Link } from 'react-router-dom';
+
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import {
+  TextField,
+  Typography,
+  Box,
+  Button,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+
+
+import LoginIcon from "@mui/icons-material/Login";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
+import PasswordIcon from "../../Utils/PasswordIcon";
+
+import { signIn } from "../../services/authentication";
+
+import Navigation from "../../authentication/Navigation";
+import Register from "../Register/Register";
+
+
+
+const INITIAL_STATE = {
+  email: "",
+  password: "",
+};
+
+
+const LOGIN_FIELDS = [
+  { id: "emailInput", name: "email", label: "Email", variant: "standard",},
+  {
+    id: "passwordInput",
+    name: "password",
+    label: "Password",
+    variant: "standard",
+    color: "secondary",
+  },
+];
+
+
+const Login = (theme) => {
+  const[loginData, setLoginData] = useState(INITIAL_STATE);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] =  useState({})
+
 
   const navigate = useNavigate();
 
-  const goToRegister = () => {
-    navigate("/register");
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    const errorsState = InputsValidations(name,value);
+   console.log(errorsState);
+   setError({...error, [name] : errorsState })
+    setLoginData({ ...loginData, [name]: value });
+   
+
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
-    return emailRegex.test(email);
-  };
+  
 
-  const validatePassword = (password) => {
-    const hasLetter = /[A-Za-z]/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
-    return password.length >= 6 && hasLetter && hasNumber && hasSpecialChar;
-  };
 
-  const validateField = (field) => {
-    const newErrorsPlaceholder = { ...errorsPlaceholder };
-    const newErrorsline = { ...errorsLine };
-    switch (field) {
-      case "email":
-        if (!email) {
-          newErrorsPlaceholder.email = "Field is required";
-        } else if (!validateEmail(email)) {
-          newErrorsline.email = "Email is not valid";
-        } else {
-          delete newErrorsPlaceholder.email;
-          delete newErrorsline.email;
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        console.log(loginData)
+        const response =  await signIn(loginData);
+        console.log(response)
+        if(response.success){
+          navigate('/homepage');
         }
-        break;
-      case "password":
-        if (!password) {
-          newErrorsPlaceholder.password = "Field is required";
-        } else if (!validatePassword(password)) {
-          newErrorsline.password = "Passwod is not valid";
-        } else {
-          delete newErrorsPlaceholder.password;
-          delete newErrorsline.password;
-        }
-        break;
-
-      default:
-        break;
-    }
-    setErrorsLine(newErrorsline);
-    setErrorsPlaceholder(newErrorsPlaceholder);
-  };
-
-  const validateForm = () => {
-    const newErrorsPlaceholder = {};
-    const newErrorsline = {};
-    if (!email) {
-      newErrorsPlaceholder.email = "Field is required";
-    } else if (!validateEmail(email)) {
-      newErrorsline.email = "Email is not valid";
+          
     }
 
-    if (!password) {
-      newErrorsPlaceholder.password = "Field is required";
-    } else if (!validatePassword(password)) {
-      newErrorsline.password = "Passwod is not valid";
-    }
+    
 
-    setErrorsLine(newErrorsline);
-    setErrorsPlaceholder(newErrorsPlaceholder);
-
-    errors = { ...newErrorsPlaceholder, ...newErrorsline };
-    setErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        navigate("/homepage");
-      } catch (error) {
-        setErrors("Invalid email or password", error);
-      }
-    }
-  };
-
+  
   return (
-    <div className="main">
-      <form className="login_container" onSubmit={handleSubmit}>
-        <h1 className="title">Login</h1>
-        <div>
-          <input
-            type="email"
-            placeholder={
-              errorsPlaceholder.email ? errorsPlaceholder.email : "E-mail"
-            }
-            className={`input ${
-              errorsPlaceholder.email
-                ? "red-placeholder"
-                : errorsLine.email
-                ? "input-error"
-                : ""
-            }`}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => validateField("email")}
-          />
-          {!validateEmail(email) && <p className="error">{errorsLine.email}</p>}
+      <Box className="authentication__form__container displayFlexCentered">
+        <Typography className={styles.title}>Login</Typography>
+        <ThemeProvider theme={theme}>
+          {LOGIN_FIELDS.map((field) => (
+            <TextField
+              required
+              key={field.id}
+              id={field.id}
+              name={field.name}
+              label={field.label}
+              variant={field.variant}
+              fullWidth
+              onChange={handleChange}
+              error={error[field.name]?.status}
+              helperText={error[field.name]?.helpText}
+              type={
+                field.id === "passwordInput"
+                  ? showPassword
+                    ? "text"
+                    : "password"
+                  : ""
+              }
+              slotProps={
+                field.id === "passwordInput"
+                  ? {
+                      input: {
+                        endAdornment: field.name  === 'password' ? (
+                          <PasswordIcon onToggle={setShowPassword}/> 
+                        ) : null,                     
+                      },
+                    }
+                  : { type: "email" }
+              }
+            />
+          ))}
 
-          <input
-            type="password"
-            placeholder={
-              errorsPlaceholder.password
-                ? errorsPlaceholder.password
-                : "Password"
-            }
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`input ${
-              errorsPlaceholder.password
-                ? "red-placeholder"
-                : errorsLine.password
-                ? "input-error"
-                : ""
-            }`}
-            onBlur={() => validateField("password")}
-          />
-          {!validatePassword(password) && (
-            <p className="error">{errorsLine.password}</p>
-          )}
-        </div>
-        <button className="login_btn">Login</button>
-        <span className="register_link" onClick={goToRegister}>
-          Register
-        </span>
-      </form>
-    </div>
+          {/* <Button disabled={error.email.error || error.password.error} onClick={handleSubmit}>Login</Button> */}
+          <Button
+			    	startIcon={<LoginIcon />}
+				    variant="contained"
+				    color="primary"
+			    	onClick={handleSubmit}
+			     >
+				   {'Login'}
+			    </Button>
+        </ThemeProvider>
+      </Box>
+      
+
+    
+
   );
 };
 

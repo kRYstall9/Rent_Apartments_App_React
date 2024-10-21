@@ -1,6 +1,7 @@
+import Register from '../Register/Register';
 const MyProfile = () => {
   return (
-    <div>MyProfile</div>
+    <Register/>
   )
 }
 

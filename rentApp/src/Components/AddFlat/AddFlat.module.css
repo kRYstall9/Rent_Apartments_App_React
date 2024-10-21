@@ -1,0 +1,19 @@
+.addFlat_container{
+    width: auto;
+    height: 30%;
+ 
+    background: transparent;
+ 
+    border: 2px solid  var(--cadet-gray);
+    border-radius: 10px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(160, 170, 171, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    color:  var(--davys-gray)!important;
+}
+
+.add_btn{
+    background-color: black;
+}

@@ -1,19 +1,39 @@
-import Login from '../src/Pages/Login/Login';
-import Register from "../src/Pages/Register/Register";
-import Homepage from "../src/Pages/Homepage/Homepage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import '../src/App.css'
+import { Outlet } from "react-router-dom";
+
+import Container from "@mui/material/Container";
+// import "./App.css";
+import { ToastContainer } from 'react-toastify';
+
+import {useAuth} from './context/AuthContext';
+
+
+
+
 
 const App = () => {
+  const {currentUser,setCurrentUser} = useAuth();
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/Homepage" element={<Homepage />}></Route>
-      </Routes>
-    </Router>
+    <>
+   		<Container maxWidth="false" sx={{ height: "100%" }}>
+			  <Outlet context={{currentUser, setCurrentUser}}/>
+		 </Container>
+
+   
+
+      <ToastContainer
+           position="bottom-right"
+           autoClose={5000}
+           hideProgressBar={false}
+           newestOnTop={false}
+           closeOnClick
+           rtl={false}
+           pauseOnFocusLoss
+           draggable
+           pauseOnHover
+           theme="dark"
+           />
+    </>
+
   );
 };
 

@@ -1,14 +1,13 @@
-import "./Homepage.css";
-import Header from "../Homepage/Components/Header";
-import SearchFlats from "../Homepage/Components/SearchFlats";
-import MyFlats from '../MyFlats';
+import Header from '../../Components/Header/Headers';
+import SearchFlats from '../../Components/SearchFlats/SearchFlats';
+import Flats from '../../Components/Flats/Flats';
 
 const Homepage = () => {
   return (
-    <div className="main-homepage">
+    <div className='main'>
       <Header />
       <SearchFlats />
-      <MyFlats />
+      <Flats />
     </div>
   );
 };
