@@ -15,7 +15,8 @@ import InputsValidations from "../../Utils/InputsValidations";
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const INITIAL_STATE = {
   email: "",
@@ -275,9 +276,10 @@ const Register = () => {
       ))}
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["SingleInputDateRangeField"]}>
-          <DateRangePicker
-            slots={{ field: WrappedSingleInputDateRangeField }}
-          />
+        <DatePicker
+          label="Picker with helper text"
+          slotProps={{ textField: { helperText: 'Please fill this field' } }}
+        />
         </DemoContainer>
       </LocalizationProvider>
       <Button
