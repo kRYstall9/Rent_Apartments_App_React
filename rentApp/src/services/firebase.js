@@ -2,8 +2,10 @@ import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 
+const firebaseApiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCZFw_qspCXK7-2k3LCDLXgHHrzt4Hx7bU",
+  apiKey: firebaseApiKey,
   authDomain: "apartementsapp.firebaseapp.com",
   projectId: "apartementsapp",
   storageBucket: "apartementsapp.appspot.com",
