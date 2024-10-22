@@ -2,7 +2,7 @@ import { NavLink, useOutletContext,Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { auth, db } from "../../../firebase";
+import { auth, db } from "../../services/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut,onAuthStateChanged } from "firebase/auth";
 import LogoutIcon from "@mui/icons-material/Logout";

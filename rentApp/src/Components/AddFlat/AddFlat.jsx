@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {doc,getDoc,updateDoc} from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth";
-import {auth,db } from '../../../firebase';
+import {auth,db } from "../../services/firebase";
 
 const AddFlat = () => {
     const [flatData, setFlatData] = useState({

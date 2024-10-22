@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../../firebase";
+import { auth, db } from "../../services/firebase";
 import { setDoc, doc } from "firebase/firestore";
 
 import styles from "../Login/Login.module.css";
@@ -11,7 +11,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 
 import PasswordIcon from "../../Utils/PasswordIcon";
 
-import InputsValidations from "../../Utils/InputsValidations";
+import { InputsValidations } from "../../Utils/Utils";
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
