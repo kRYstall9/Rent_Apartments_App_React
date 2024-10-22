@@ -6,7 +6,7 @@ import { auth, db } from "../../services/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut,onAuthStateChanged } from "firebase/auth";
 import LogoutIcon from "@mui/icons-material/Logout";
-import logo from '../../assets/gold_logo.png'
+import logo from '../../../public/assets/gold_logo.png'
 import { KeyboardReturnOutlined } from "@mui/icons-material";
 
 const Headers = () => {
