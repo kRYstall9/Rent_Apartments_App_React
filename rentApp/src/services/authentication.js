@@ -1,41 +1,8 @@
 import { signInWithEmailAndPassword} from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from '../services/firebase';
+import { alertBuilder } from "../Utils/Utils";
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-//import { useNavigate } from "react-router-dom";
-
-//const navigate = useNavigate();
-
-const succesfulAlert = (message) =>{
-    toast.success(message, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Bounce,
-        });
-  
-}
-
-const failedAlert = (message) =>{
-    toast.error(message, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition : Bounce,
-        });
-  
-}
 
 export const signIn = async (userData) => {
 	const { email, password } = userData;
@@ -43,13 +10,13 @@ export const signIn = async (userData) => {
 	try {
 		await signInWithEmailAndPassword(auth,email,password);
         
-         succesfulAlert('Login succesful');
+         alertBuilder('Login succesful', true);
       
         return {success: true}
 
 	} catch (error) {
 		console.error("Error signing in: ", error);
-        failedAlert('Incorrect email or password');
+        alertBuilder('Incorrect email or password', false);
         
 	}
 };
